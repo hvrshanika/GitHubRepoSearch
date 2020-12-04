@@ -18,27 +18,35 @@ class RepoListViewController: UIViewController {
     
     var fetchedResultsController: NSFetchedResultsController<Repository>!
     
-    var isRefresing = true
+    var isRefresing = true // Defaults to true because in the viewDidLoad we are calling the API
     var errorOccured = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setInitialUI()
+    }
+    
+    func setInitialUI() {
         prepareViewModelObserver()
         loadSavedData() // Initialize FetchedResultsController
-        fetchRepoList()
+        
+        searchBar.text = "tetris" // Set the default search query
+        searchBarSearchButtonClicked(searchBar)
     }
     
     func prepareViewModelObserver() {
         self.viewModel.errorOccured = { (message) in
-            self.show(error: message)
             self.isRefresing = false
-            self.errorOccured = true
+            if !self.errorOccured {
+                self.errorOccured = true
+                self.show(error: message)
+            }
         }
     }
     
-    @objc func fetchRepoList() {
-        viewModel.fetchRepoList(for: "tetris")
+    @objc func fetchRepoList(for query: String) {
+        viewModel.fetchRepoList(for: query)
     }
     
     func loadSavedData() {
@@ -77,8 +85,9 @@ class RepoListViewController: UIViewController {
 extension RepoListViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith diff: CollectionDifference<NSManagedObjectID>) {
-        repoCollectionView.reloadData()
+        loadSavedData()
         isRefresing = false
+        errorOccured = false
     }
     
 }
@@ -125,8 +134,20 @@ extension RepoListViewController: UICollectionViewDelegate, UICollectionViewData
         
         if (indexPath.row == collectionView.numberOfItems(inSection: 0)-1 || errorOccured) && !isRefresing  {
             isRefresing = true;
-            self.fetchRepoList()
+            self.fetchRepoList(for: viewModel.searchQuery!)
         }
+    }
+    
+}
+
+// MARK: - Search bar delegate
+extension RepoListViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let query = searchBar.text, query != "" {
+            viewModel.searchQuery = query
+        }
+        view.endEditing(true)
     }
     
 }

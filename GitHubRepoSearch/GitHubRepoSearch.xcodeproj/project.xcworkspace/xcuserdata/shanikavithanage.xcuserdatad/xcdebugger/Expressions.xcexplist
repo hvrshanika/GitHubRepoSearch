@@ -9,6 +9,12 @@
          contextName = "RepoListViewController.collectionView(_:willDisplay:forItemAt:):RepoListViewController.swift">
          <PersistentStrings>
             <PersistentString
+               value = "collectionView.numberOfItems(inSection: 0)-1">
+            </PersistentString>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+            <PersistentString
                value = "collectionView.numberOfItems(inSection: 0)">
             </PersistentString>
          </PersistentStrings>

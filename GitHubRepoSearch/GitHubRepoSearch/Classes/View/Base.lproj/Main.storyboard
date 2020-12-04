@@ -22,6 +22,9 @@
                                     <constraint firstAttribute="height" constant="44" id="sVW-Yy-oYV"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Itv-KM-hjS"/>
+                                </connections>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="w8d-GR-qb9">
                                 <rect key="frame" x="20" y="102" width="374" height="760"/>

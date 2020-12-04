@@ -10,6 +10,22 @@ import Foundation
 class RepoListViewModel {
     
     var errorOccured: ((String) -> Void)?
+    
+    var searchQuery: String? {
+        didSet {
+            searchQueryChanged()
+        }
+    }
+    
+    func searchQueryChanged() {
+        // Clear the main context to remove previous objects
+        let context = CoreDataManager.instance.getMainContext()
+        context.reset()
+        
+        // Reset the currentpage to 0
+        RepositoryService.instance.currentPage = 0
+        fetchRepoList(for: searchQuery!)
+    }
         
     func fetchRepoList(for query: String) {
         
