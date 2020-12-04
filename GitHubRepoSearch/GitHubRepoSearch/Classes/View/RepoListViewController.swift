@@ -18,24 +18,27 @@ class RepoListViewController: UIViewController {
     
     var fetchedResultsController: NSFetchedResultsController<Repository>!
     
+    var isRefresing = true
+    var errorOccured = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadSavedData()
         prepareViewModelObserver()
+        loadSavedData() // Initialize FetchedResultsController
         fetchRepoList()
     }
     
-    func fetchRepoList() {
-        viewModel.fetchRepoList(for: "tetris")
-    }
-
     func prepareViewModelObserver() {
-        self.viewModel.repositoriesDidChange = { (finished, error) in
-            if !error {
-                self.loadSavedData()
-            }
+        self.viewModel.errorOccured = { (message) in
+            self.show(error: message)
+            self.isRefresing = false
+            self.errorOccured = true
         }
+    }
+    
+    @objc func fetchRepoList() {
+        viewModel.fetchRepoList(for: "tetris")
     }
     
     func loadSavedData() {
@@ -55,13 +58,28 @@ class RepoListViewController: UIViewController {
             try fetchedResultsController.performFetch()
             repoCollectionView.reloadData()
         } catch {
-            print("Fetch failed")
+            show(error: NSLocalizedString("Error occured while retreiving data", comment: ""))
         }
+    }
+    
+    func show(error message: String) {
+        let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: { _ in
+            alert.dismiss(animated: true)
+        })
+        alert.addAction(ok)
+        self.present(alert, animated: true) {() -> Void in }
     }
 }
 
 // MARK: - Fetched Result Controller
 extension RepoListViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith diff: CollectionDifference<NSManagedObjectID>) {
+        repoCollectionView.reloadData()
+        isRefresing = false
+    }
     
 }
 
@@ -93,8 +111,7 @@ extension RepoListViewController: UICollectionViewDelegate, UICollectionViewData
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-           layout collectionViewLayout: UICollectionViewLayout,
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
            sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         // Calculate width of the cell according to the collectionview width
@@ -102,6 +119,14 @@ extension RepoListViewController: UICollectionViewDelegate, UICollectionViewData
         let width = (collectionView.frame.size.width - 20) / 2
         
         return CGSize(width: width, height: 128)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if (indexPath.row == collectionView.numberOfItems(inSection: 0)-1 || errorOccured) && !isRefresing  {
+            isRefresing = true;
+            self.fetchRepoList()
+        }
     }
     
 }

@@ -9,7 +9,7 @@ import Foundation
 
 enum Result<Value: Decodable> {
     case success(Value)
-    case failure(Bool)
+    case failure(Bool,String)
 }
 
 protocol Requestable {}
@@ -24,12 +24,14 @@ extension Requestable {
         
         let task = URLSession.shared.dataTask(with: url,  completionHandler: { (data, response, error) in
                 if let error = error {
-                    print(error.localizedDescription)
+                    callback(.failure(true, error.localizedDescription))
                 } else if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                             callback(.success(data!))
+                    } else if httpResponse.statusCode == 403 {
+                            callback(.failure(true, NSLocalizedString("Rate limit exceeded\nPlease wait for a minute", comment: "")))
                     } else {
-                        callback(.failure(true))
+                        callback(.failure(true, NSLocalizedString("Error occured while retreiving data", comment: "")))
                     }
                 }
         })

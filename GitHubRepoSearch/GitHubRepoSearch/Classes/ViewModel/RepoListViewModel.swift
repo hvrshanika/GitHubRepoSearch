@@ -9,8 +9,8 @@ import Foundation
 
 class RepoListViewModel {
     
-    var repositoriesDidChange: ((Bool, Bool) -> Void)?
-    
+    var errorOccured: ((String) -> Void)?
+        
     func fetchRepoList(for query: String) {
         
         // Sending the request in Main thread and receiving in a backgorunf thread
@@ -33,14 +33,16 @@ class RepoListViewModel {
                 // 5. Save the background context
                 CoreDataManager.instance.saveContext(forContext: context)
                 
-                // 6. Notify the UI on the Main thread
-                DispatchQueue.main.async {
-                    self.repositoriesDidChange!(true, false)
-                }
+                // Once the private context objects gets saved to the main context, fetched results controller's delegate will be triggerd
                 
                 break
-            case .failure(let error):
-                print(error.description)
+            case .failure(let error, let message):
+                if error {
+                    // Show the error message in main thread
+                    DispatchQueue.main.async {
+                        self.errorOccured!(message)
+                    }
+                }
             }
         }
     }

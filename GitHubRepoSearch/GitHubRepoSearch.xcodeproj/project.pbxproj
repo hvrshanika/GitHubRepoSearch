@@ -99,9 +99,9 @@
 			children = (
 				4FF7CF4E2579340C00A0D074 /* Helpers */,
 				4FF7CF4D2579340500A0D074 /* Model */,
-				4FF7CF482579329800A0D074 /* ViewModel */,
-				4FF7CF4725792DFC00A0D074 /* View */,
 				4FF7CF4625792B6D00A0D074 /* Network */,
+				4FF7CF4725792DFC00A0D074 /* View */,
+				4FF7CF482579329800A0D074 /* ViewModel */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -137,8 +137,8 @@
 		4FF7CF4725792DFC00A0D074 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4FF7CF2F25792B0400A0D074 /* RepoListViewController.swift */,
 				4FF7CF3125792B0400A0D074 /* Main.storyboard */,
+				4FF7CF2F25792B0400A0D074 /* RepoListViewController.swift */,
 				4FF7CF492579332100A0D074 /* RepositoryCell.swift */,
 			);
 			path = View;
