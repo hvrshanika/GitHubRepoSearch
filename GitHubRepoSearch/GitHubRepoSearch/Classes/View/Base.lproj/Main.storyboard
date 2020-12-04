@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Repo List View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="RepoListViewController" customModule="GitHubRepoSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="mej-hG-yoq">
+                                <rect key="frame" x="20" y="44" width="374" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="sVW-Yy-oYV"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="w8d-GR-qb9">
+                                <rect key="frame" x="20" y="102" width="374" height="760"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BDN-y3-8m5">
+                                    <size key="itemSize" width="170" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RepositoryCell" id="UWa-Vg-qpj" customClass="RepositoryCell" customModule="GitHubRepoSearch" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="170" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="plx-hr-x35">
+                                            <rect key="frame" x="0.0" y="0.0" width="170" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L74-ws-HvK">
+                                                    <rect key="frame" x="8" y="8" width="154" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="kKJ-ge-4mu"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Owner" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skH-tK-2XK">
+                                                    <rect key="frame" x="8" y="56" width="154" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="jQq-DI-FK7"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VoI-t6-Vfw">
+                                                    <rect key="frame" x="8" y="104" width="154" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="aLM-5P-DOS"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="skH-tK-2XK" firstAttribute="leading" secondItem="plx-hr-x35" secondAttribute="leading" constant="8" id="28C-D3-Lmh"/>
+                                                <constraint firstAttribute="trailing" secondItem="VoI-t6-Vfw" secondAttribute="trailing" constant="8" id="2Ez-un-teA"/>
+                                                <constraint firstAttribute="trailing" secondItem="skH-tK-2XK" secondAttribute="trailing" constant="8" id="2sU-c3-kvt"/>
+                                                <constraint firstItem="VoI-t6-Vfw" firstAttribute="leading" secondItem="plx-hr-x35" secondAttribute="leading" constant="8" id="45E-qB-WWu"/>
+                                                <constraint firstItem="L74-ws-HvK" firstAttribute="leading" secondItem="plx-hr-x35" secondAttribute="leading" constant="8" id="EIM-8O-cP4"/>
+                                                <constraint firstItem="skH-tK-2XK" firstAttribute="top" secondItem="L74-ws-HvK" secondAttribute="bottom" constant="8" id="oVt-bk-h2v"/>
+                                                <constraint firstItem="L74-ws-HvK" firstAttribute="top" secondItem="plx-hr-x35" secondAttribute="top" constant="8" id="pQ1-86-ZVL"/>
+                                                <constraint firstItem="VoI-t6-Vfw" firstAttribute="top" secondItem="skH-tK-2XK" secondAttribute="bottom" constant="8" id="umW-fz-p3Z"/>
+                                                <constraint firstAttribute="trailing" secondItem="L74-ws-HvK" secondAttribute="trailing" constant="8" id="zzR-67-FiE"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="repoName" destination="L74-ws-HvK" id="Npb-XY-Zb2"/>
+                                            <outlet property="repoOwner" destination="skH-tK-2XK" id="loU-Iu-DPZ"/>
+                                            <outlet property="repoSize" destination="VoI-t6-Vfw" id="nSb-wi-z3w"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="R4S-g6-oci"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="R3t-Lt-fCE"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mej-hG-yoq" secondAttribute="trailing" constant="20" id="7FO-UC-hLx"/>
+                            <constraint firstItem="w8d-GR-qb9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Bqa-zm-fcc"/>
+                            <constraint firstItem="w8d-GR-qb9" firstAttribute="top" secondItem="mej-hG-yoq" secondAttribute="bottom" constant="14" id="Nva-Y9-V4k"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="w8d-GR-qb9" secondAttribute="trailing" constant="20" id="Yqn-4V-tDu"/>
+                            <constraint firstItem="w8d-GR-qb9" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Zzl-ai-tkU"/>
+                            <constraint firstItem="mej-hG-yoq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="aN5-Tc-eH7"/>
+                            <constraint firstItem="mej-hG-yoq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="oqM-jz-Vi4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="repoCollectionView" destination="w8d-GR-qb9" id="aYB-f9-KpN"/>
+                        <outlet property="searchBar" destination="mej-hG-yoq" id="Pqg-ls-ute"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="112.5"/>
+        </scene>
+    </scenes>
+</document>
