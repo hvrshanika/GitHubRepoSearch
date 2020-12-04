@@ -33,9 +33,9 @@ extension Requestable {
                 } else if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                             callback(.success(data!))
-                    } else if httpResponse.statusCode == 403 {
+                    } else if httpResponse.statusCode == 403 { // Check for rate limit
                         callback(.failure(.rateLimitExceeded, NSLocalizedString("Rate limit exceeded\nPlease wait for a minute", comment: "")))
-                    } else {
+                    } else { // Other errors
                         callback(.failure(.other, NSLocalizedString("Error occured while retreiving data", comment: "")))
                     }
                 }

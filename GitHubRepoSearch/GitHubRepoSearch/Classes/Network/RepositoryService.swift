@@ -8,6 +8,7 @@
 import Foundation
 
 // https://docs.github.com/en/free-pro-team@latest/rest/reference/search#search-repositories
+// https://docs.github.com/en/free-pro-team@latest/rest/reference/rate-limit
 
 class RepositoryService: NSObject, Requestable {
 

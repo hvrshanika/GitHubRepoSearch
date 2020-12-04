@@ -53,6 +53,12 @@ class RepoListViewModel {
                 
                 // Once the private context objects gets saved to the main context, fetched results controller's delegate will be triggerd
                 
+                 /*
+                 I'm not saving the main context here. So the objects do not get saved to the database.
+                 If needed can be saved here by doing it in the main thread.
+                 Then will have to clear the database each time app starts or each time the search query gets changed
+                 */
+                
                 break
             case .failure(let type, let message):
                 // Show the error message in main thread
@@ -75,7 +81,8 @@ class RepoListViewModel {
             case .success(let data):
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? Dictionary<String, Any>
-                                        
+                                  
+                    // Get the Rate limit list from resources
                     if let rateLimitDict = json!["resources"] as? Dictionary<String, Any> {
                         if let jsonData: Data = try? JSONSerialization.data(withJSONObject: rateLimitDict, options: []) {
                             let decoder = JSONDecoder()

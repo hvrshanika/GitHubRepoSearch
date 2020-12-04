@@ -13,6 +13,7 @@ class RepoListViewController: UIViewController {
     let viewModel = RepoListViewModel()
     let coreDataManager = CoreDataManager.instance // Make sure CoreDataManager gets init in Main thread
 
+    // IBOutlets
     @IBOutlet weak var repoCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -88,10 +89,12 @@ class RepoListViewController: UIViewController {
 extension RepoListViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith diff: CollectionDifference<NSManagedObjectID>) {
-        loadSavedData()
+        loadSavedData() // Fetch and refresh UI
         isRefresing = false
         
-        errorOccured = false
+        if errorOccured {
+            errorOccured = false
+        }
     }
     
 }
