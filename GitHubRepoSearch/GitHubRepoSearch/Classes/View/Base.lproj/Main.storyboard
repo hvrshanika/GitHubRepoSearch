@@ -30,17 +30,17 @@
                                 <rect key="frame" x="20" y="102" width="374" height="760"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BDN-y3-8m5">
-                                    <size key="itemSize" width="170" height="128"/>
+                                    <size key="itemSize" width="170" height="152"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RepositoryCell" id="UWa-Vg-qpj" customClass="RepositoryCell" customModule="GitHubRepoSearch" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="170" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="170" height="152"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="plx-hr-x35">
-                                            <rect key="frame" x="0.0" y="0.0" width="170" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="170" height="152"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L74-ws-HvK">
@@ -70,13 +70,25 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AlA-X3-xKM">
+                                                    <rect key="frame" x="8" y="128" width="154" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="50V-0u-kNA"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="skH-tK-2XK" firstAttribute="leading" secondItem="plx-hr-x35" secondAttribute="leading" constant="8" id="28C-D3-Lmh"/>
                                                 <constraint firstAttribute="trailing" secondItem="VoI-t6-Vfw" secondAttribute="trailing" constant="8" id="2Ez-un-teA"/>
                                                 <constraint firstAttribute="trailing" secondItem="skH-tK-2XK" secondAttribute="trailing" constant="8" id="2sU-c3-kvt"/>
                                                 <constraint firstItem="VoI-t6-Vfw" firstAttribute="leading" secondItem="plx-hr-x35" secondAttribute="leading" constant="8" id="45E-qB-WWu"/>
+                                                <constraint firstItem="AlA-X3-xKM" firstAttribute="top" secondItem="VoI-t6-Vfw" secondAttribute="bottom" constant="8" id="5Yg-Av-Y5F"/>
+                                                <constraint firstAttribute="trailing" secondItem="AlA-X3-xKM" secondAttribute="trailing" constant="8" id="9la-5z-cj1"/>
                                                 <constraint firstItem="L74-ws-HvK" firstAttribute="leading" secondItem="plx-hr-x35" secondAttribute="leading" constant="8" id="EIM-8O-cP4"/>
+                                                <constraint firstItem="AlA-X3-xKM" firstAttribute="leading" secondItem="plx-hr-x35" secondAttribute="leading" constant="8" id="SS8-HD-EkD"/>
                                                 <constraint firstItem="skH-tK-2XK" firstAttribute="top" secondItem="L74-ws-HvK" secondAttribute="bottom" constant="8" id="oVt-bk-h2v"/>
                                                 <constraint firstItem="L74-ws-HvK" firstAttribute="top" secondItem="plx-hr-x35" secondAttribute="top" constant="8" id="pQ1-86-ZVL"/>
                                                 <constraint firstItem="VoI-t6-Vfw" firstAttribute="top" secondItem="skH-tK-2XK" secondAttribute="bottom" constant="8" id="umW-fz-p3Z"/>
@@ -84,9 +96,10 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
-                                            <outlet property="repoName" destination="L74-ws-HvK" id="Npb-XY-Zb2"/>
-                                            <outlet property="repoOwner" destination="skH-tK-2XK" id="loU-Iu-DPZ"/>
-                                            <outlet property="repoSize" destination="VoI-t6-Vfw" id="nSb-wi-z3w"/>
+                                            <outlet property="lblEstDownTime" destination="AlA-X3-xKM" id="nOJ-10-P2g"/>
+                                            <outlet property="lblRepoName" destination="L74-ws-HvK" id="Npb-XY-Zb2"/>
+                                            <outlet property="lblRepoOwner" destination="skH-tK-2XK" id="loU-Iu-DPZ"/>
+                                            <outlet property="lblRepoSize" destination="VoI-t6-Vfw" id="nSb-wi-z3w"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

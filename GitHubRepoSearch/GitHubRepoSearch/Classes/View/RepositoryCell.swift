@@ -11,9 +11,9 @@ class RepositoryCell: UICollectionViewCell {
     
     static let reuseID = "RepositoryCell"
     
-    @IBOutlet weak var repoName: UILabel!
-    @IBOutlet weak var repoOwner: UILabel!
-    @IBOutlet weak var repoSize: UILabel!
-    
+    @IBOutlet weak var lblRepoName: UILabel!
+    @IBOutlet weak var lblRepoOwner: UILabel!
+    @IBOutlet weak var lblRepoSize: UILabel!
+    @IBOutlet weak var lblEstDownTime: UILabel!
     
 }

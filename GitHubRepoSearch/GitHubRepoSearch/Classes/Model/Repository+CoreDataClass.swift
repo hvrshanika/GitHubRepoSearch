@@ -44,4 +44,10 @@ public class Repository: NSManagedObject, Decodable {
         }
     }
     
+    func getDownloadTimeInMins(for timeStamp: Double) -> Int {
+        let bandwidth = 10000 * (1 - exp(-timeStamp/3))
+        let estInSecs = Double(size*8000)/bandwidth // Size is in KB, So multiplying it by 8000
+        return Int(round(estInSecs/60))
+    }
+    
 }

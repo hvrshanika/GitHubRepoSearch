@@ -21,6 +21,9 @@ class RepoListViewController: UIViewController {
     var isRefresing = true // Defaults to true because in the viewDidLoad we are calling the API
     var errorOccured = false
     
+    // Getting the current timestamp to calculate the estimated download time
+    let currentTimeStamp = Date().timeIntervalSince1970
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -112,9 +115,12 @@ extension RepoListViewController: UICollectionViewDelegate, UICollectionViewData
         
         let repository = fetchedResultsController.object(at: indexPath)
         
-        cell.repoName.text = repository.name
-        cell.repoOwner.text = repository.owner?.login
-        cell.repoSize.text = "\(repository.size) KB"
+        cell.lblRepoName.text = repository.name
+        cell.lblRepoOwner.text = repository.owner?.login
+        cell.lblRepoSize.text = "\(repository.size) KB"
+        
+        let estMinutes = repository.getDownloadTimeInMins(for: currentTimeStamp)
+        cell.lblEstDownTime.text = "EDT (approx) \(estMinutes) \(estMinutes == 1 ? "min" : "mins")"
         
         cell.backgroundColor = repository.hasWiki ? .systemGroupedBackground : .white
         
@@ -128,7 +134,7 @@ extension RepoListViewController: UICollectionViewDelegate, UICollectionViewData
         // So that number of columns is consistent across all devices
         let width = (collectionView.frame.size.width - 20) / 2
         
-        return CGSize(width: width, height: 128)
+        return CGSize(width: width, height: 152)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
