@@ -37,6 +37,7 @@ public class Repository: NSManagedObject, Decodable {
             name = try values.decodeIfPresent(String.self, forKey: .name)
             size = try values.decode(Int64.self, forKey: .size)
             hasWiki = try values.decode(Bool.self, forKey: .hasWiki)
+            sortOrder = CoreDataManager.instance.getNextSortOrder()
             owner = try values.decodeIfPresent(Owner.self, forKey: .owner)
         } catch let error {
             print (error)

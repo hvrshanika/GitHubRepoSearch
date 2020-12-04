@@ -10,10 +10,11 @@
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="size" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sortOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Owner" inverseName="repository" inverseEntity="Owner"/>
     </entity>
     <elements>
-        <element name="Repository" positionX="-63" positionY="-18" width="128" height="118"/>
         <element name="Owner" positionX="-54" positionY="18" width="128" height="88"/>
+        <element name="Repository" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>

@@ -20,6 +20,7 @@ extension Repository {
     @NSManaged public var name: String?
     @NSManaged public var size: Int64
     @NSManaged public var hasWiki: Bool
+    @NSManaged public var sortOrder: Int16
     @NSManaged public var owner: Owner?
 
 }
