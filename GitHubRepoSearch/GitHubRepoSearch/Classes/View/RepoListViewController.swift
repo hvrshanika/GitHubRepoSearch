@@ -87,6 +87,7 @@ extension RepoListViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith diff: CollectionDifference<NSManagedObjectID>) {
         loadSavedData()
         isRefresing = false
+        
         errorOccured = false
     }
     
@@ -132,7 +133,21 @@ extension RepoListViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-        if (indexPath.row == collectionView.numberOfItems(inSection: 0)-1 || errorOccured) && !isRefresing  {
+        // This will check if the rate limit has exceeded
+        // If so will retrieve the rate limit and compare the timestamp
+        var refreshAfterError = false
+        if errorOccured, let rateLimit = viewModel.searchRateLimit {
+            let currTimeStamp = Date().timeIntervalSince1970
+            
+            if currTimeStamp > Double(rateLimit.reset!) {
+                refreshAfterError = true
+                
+                // remove search limit because the request will be sent
+                viewModel.searchRateLimit = nil
+            }
+        }
+        
+        if (indexPath.row == collectionView.numberOfItems(inSection: 0)-1 || refreshAfterError) && !isRefresing  {
             isRefresing = true;
             self.fetchRepoList(for: viewModel.searchQuery!)
         }

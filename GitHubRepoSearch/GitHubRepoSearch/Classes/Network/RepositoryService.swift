@@ -19,6 +19,7 @@ class RepositoryService: NSObject, Requestable {
     let itemsPerPage = 10
     
     let repoSearchURL = "https://api.github.com/search/repositories?q="
+    let rateLimitURL = "https://api.github.com/rate_limit"
     
     func fetchRepositories(for query: String, callback: @escaping (Result<Data>) -> Void) {
         
@@ -28,13 +29,19 @@ class RepositoryService: NSObject, Requestable {
         
         let totalPages = maxNumberOfItems/itemsPerPage
         if currentPage > totalPages {
-            callback(.failure(true, NSLocalizedString("Maximum number of items retrieved", comment: "")))
+            callback(.failure(.other, NSLocalizedString("Maximum number of items retrieved", comment: "")))
             return
         }
         
         let urlStr = "\(repoSearchURL)\(query)&per_page=\(itemsPerPage)&page=\(currentPage)"
         
         request(url: urlStr) { (result) in
+           callback(result)
+        }
+    }
+    
+    func fetchRateLimit(callback: @escaping (Result<Data>) -> Void) {
+        request(url: rateLimitURL) { (result) in
            callback(result)
         }
     }

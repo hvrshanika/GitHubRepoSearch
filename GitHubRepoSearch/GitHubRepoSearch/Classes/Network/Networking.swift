@@ -7,9 +7,14 @@
 
 import Foundation
 
+enum ErrorType {
+    case rateLimitExceeded
+    case other
+}
+
 enum Result<Value: Decodable> {
     case success(Value)
-    case failure(Bool,String)
+    case failure(ErrorType,String)
 }
 
 protocol Requestable {}
@@ -24,14 +29,14 @@ extension Requestable {
         
         let task = URLSession.shared.dataTask(with: url,  completionHandler: { (data, response, error) in
                 if let error = error {
-                    callback(.failure(true, error.localizedDescription))
+                    callback(.failure(.other, error.localizedDescription))
                 } else if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 200 {
                             callback(.success(data!))
                     } else if httpResponse.statusCode == 403 {
-                            callback(.failure(true, NSLocalizedString("Rate limit exceeded\nPlease wait for a minute", comment: "")))
+                        callback(.failure(.rateLimitExceeded, NSLocalizedString("Rate limit exceeded\nPlease wait for a minute", comment: "")))
                     } else {
-                        callback(.failure(true, NSLocalizedString("Error occured while retreiving data", comment: "")))
+                        callback(.failure(.other, NSLocalizedString("Error occured while retreiving data", comment: "")))
                     }
                 }
         })

@@ -17,6 +17,8 @@ class RepoListViewModel {
         }
     }
     
+    var searchRateLimit: RateLimit?
+    
     func searchQueryChanged() {
         // Clear the main context to remove previous objects
         let context = CoreDataManager.instance.getMainContext()
@@ -26,7 +28,7 @@ class RepoListViewModel {
         RepositoryService.instance.currentPage = 0
         fetchRepoList(for: searchQuery!)
     }
-        
+    
     func fetchRepoList(for query: String) {
         
         // Sending the request in Main thread and receiving in a backgorunf thread
@@ -52,13 +54,43 @@ class RepoListViewModel {
                 // Once the private context objects gets saved to the main context, fetched results controller's delegate will be triggerd
                 
                 break
-            case .failure(let error, let message):
-                if error {
-                    // Show the error message in main thread
-                    DispatchQueue.main.async {
-                        self.errorOccured!(message)
-                    }
+            case .failure(let type, let message):
+                // Show the error message in main thread
+                DispatchQueue.main.async {
+                    self.errorOccured!(message)
                 }
+                
+                // Checking if the error was rate limit and requesting for rate limit details
+                if type == .rateLimitExceeded {
+                    self.fetchRateLimit()
+                }
+                break
+            }
+        }
+    }
+    
+    func fetchRateLimit() {
+        RepositoryService.instance.fetchRateLimit { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? Dictionary<String, Any>
+                                        
+                    if let rateLimitDict = json!["resources"] as? Dictionary<String, Any> {
+                        if let jsonData: Data = try? JSONSerialization.data(withJSONObject: rateLimitDict, options: []) {
+                            let decoder = JSONDecoder()
+                            let rateLimits = try decoder.decode([String:RateLimit].self, from: jsonData)
+                            
+                            self.searchRateLimit = rateLimits["search"]
+                        }
+                    }
+                } catch let jsonError {
+                    print(jsonError)
+                }
+                
+                break
+            case .failure:
+                break
             }
         }
     }
